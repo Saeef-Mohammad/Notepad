@@ -81,13 +81,20 @@ public class EditorActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.menu_save:
-                String title = titleEt.getText().toString();
-                String note = noteEt.getText().toString();
+                if (noteEt.getText().toString().equals("")) {
+                    Toast.makeText(this, "Insert Note!", Toast.LENGTH_SHORT).show();
+                    break;
+                } else {
+
+                    if (titleEt.getText().toString().equals("")) {
+                        titleEt.setText("Untitled");
+                    }
+                }
 
                 if (noteId == 0 && adapterPosition == -1) {
-                    createNote(title, note);
+                    createNote(titleEt.getText().toString(), noteEt.getText().toString());
                 } else {
-                    updateNote(title,note);
+                    updateNote(titleEt.getText().toString(), noteEt.getText().toString());
                 }
 
                 Intent intent = new Intent(EditorActivity.this, MainActivity.class);
