@@ -18,11 +18,9 @@
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
             android:hint="@string/hint_title"
-            android:textColor="#000000"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:background="@android:color/transparent"
-            android:gravity="center_horizontal"/>
+            android:background="@android:color/transparent" />
 
         <EditText
             android:id="@+id/note_et"

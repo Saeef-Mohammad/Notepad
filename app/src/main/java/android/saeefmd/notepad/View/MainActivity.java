@@ -2,7 +2,6 @@ package android.saeefmd.notepad.View;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.saeefmd.notepad.Adapter.NoteListAdapter;
 import android.saeefmd.notepad.Database.DatabaseHelper;
 import android.saeefmd.notepad.Database.Model.Note;
@@ -12,12 +11,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
     private NoteListAdapter noteListAdapter;
     private List<Note> notesList = new ArrayList<>();
     private DatabaseHelper databaseHelper;
+
+    private int adapterPosition = -1;
+    private long noteId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,17 +49,18 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         noteListRv.setLayoutManager(mLayoutManager);
+        noteListRv.setItemAnimator(new DefaultItemAnimator());
         noteListRv.setAdapter(noteListAdapter);
 
         toggleEmptyNotes();
 
-        Intent intent = getIntent();
+        /*Intent intent = getIntent();
         long noteId = intent.getLongExtra("noteId", 0);
-        int adapterPosition = intent.getIntExtra("adapterPosition", -1);
+        final int adapterPosition = intent.getIntExtra("adapterPosition", -1);
 
         if (noteId != 0 && adapterPosition != -1) {
             updateAdapter(adapterPosition, noteId);
-        }
+        }*/
 
         notesList.addAll(databaseHelper.getAllNotes());
 
@@ -76,14 +78,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view, int position) {
 
-                long id = notesList.get(position).getId();
+                adapterPosition = position;
+
+                noteId = notesList.get(position).getId();
 
                 Intent intent = new Intent(MainActivity.this, EditorActivity.class);
-                intent.putExtra("noteId", id);
+                intent.putExtra("noteId", noteId);
                 intent.putExtra("adapterPosition", position);
                 startActivity(intent);
-
-                //Toast.makeText(MainActivity.this, "ID " + id, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -142,5 +144,17 @@ public class MainActivity extends AppCompatActivity {
         noteListAdapter.notifyItemChanged(position);
 
         toggleEmptyNotes();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (noteId != 0 && adapterPosition != -1) {
+            updateAdapter(adapterPosition, noteId);
+        } else {
+
+            noteListAdapter.notifyDataSetChanged();
+            toggleEmptyNotes();
+        }
     }
 }

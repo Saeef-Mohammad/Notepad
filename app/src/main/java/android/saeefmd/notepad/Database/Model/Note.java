@@ -7,12 +7,10 @@ public class Note {
     public static final String COLUMN_ID = "id";
     public static final String COLUMN_TITLE = "title";
     public static final String COLUMN_NOTE = "note";
-    //public static final String COLUMN_TIMESTAMP = "timestamp";
 
     private int id;
     private String title;
     private String note;
-    //private String timestamp;
 
     public Note() {
     }
@@ -21,7 +19,6 @@ public class Note {
         this.id = id;
         this.title = title;
         this.note = note;
-        //this.timestamp = timestamp;
     }
 
     public int getId() {
@@ -47,12 +44,4 @@ public class Note {
     public void setNote(String note) {
         this.note = note;
     }
-
-    /*public String getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
-    }*/
 }

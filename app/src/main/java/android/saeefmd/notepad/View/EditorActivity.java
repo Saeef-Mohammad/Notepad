@@ -97,9 +97,6 @@ public class EditorActivity extends AppCompatActivity {
                     updateNote(titleEt.getText().toString(), noteEt.getText().toString());
                 }
 
-                Intent intent = new Intent(EditorActivity.this, MainActivity.class);
-                intent.putExtra("adapterPosition", adapterPosition);
-                startActivity(intent);
                 finish();
 
                 return true;

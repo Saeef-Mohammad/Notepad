@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">Notepad</string>
+    <string name="app_name">Notes</string>
 
+    <string name="editor_activity_label">Editor</string>
     <string name="hint_title">Title</string>
     <string name="hint_type_note">Your note here</string>
     <string name="editor_menu_save">Save</string>
