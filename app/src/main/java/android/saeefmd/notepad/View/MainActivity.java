@@ -32,9 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private List<Note> notesList = new ArrayList<>();
     private DatabaseHelper databaseHelper;
 
-    private int adapterPosition = -1;
-    private long noteId = 0;
-    private boolean newNote = false;
+    private int adapterPosition;
+    private long noteId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +62,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                newNote = true;
-
                 Intent intent = new Intent(MainActivity.this, EditorActivity.class);
-                intent.putExtra("newNote", newNote);
                 startActivity(intent);
             }
         });
@@ -157,16 +153,24 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (noteId != 0 && adapterPosition != -1) {
+
+        SharedPreferences sharedPreference = this
+                .getSharedPreferences(getString(R.string.shared_preference_name), Context.MODE_PRIVATE);
+
+        boolean newNote = sharedPreference.getBoolean(getString(R.string.new_note_flag), false);
+        boolean updateNote = sharedPreference.getBoolean(getString(R.string.update_note_flag), false);
+
+        if (updateNote) {
+
             updateAdapter(adapterPosition, noteId);
         } else if (newNote){
-            SharedPreferences sharedPreference = this
-                    .getSharedPreferences(getString(R.string.shared_preference_name), Context.MODE_PRIVATE);
+
             long id = sharedPreference.getLong(getString(R.string.note_id), 0);
 
             if (id != 0)
                 addNewNote(id);
         } else {
+
             toggleEmptyNotes();
         }
     }

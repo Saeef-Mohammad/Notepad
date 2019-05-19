@@ -9,5 +9,7 @@
     <string name="editor_menu_delete">Delete</string>
     <string name="no_note">No note!</string>
     <string name="note_id">noteId</string>
+    <string name="new_note_flag">newNote</string>
+    <string name="update_note_flag">updateNote</string>
     <string name="shared_preference_name">COM.SAEEFMD.NOTEPAD</string>
 </resources>

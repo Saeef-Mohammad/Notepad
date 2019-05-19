@@ -59,6 +59,7 @@ public class EditorActivity extends AppCompatActivity {
         SharedPreferences sharedPreference = this
                 .getSharedPreferences(getString(R.string.shared_preference_name), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreference.edit();
+        editor.putBoolean(getString(R.string.new_note_flag), true);
         editor.putLong(getString(R.string.note_id), id);
         editor.apply();
     }
@@ -71,6 +72,11 @@ public class EditorActivity extends AppCompatActivity {
         // updating note in db
         databaseHelper.updateNote(mNote);
 
+        SharedPreferences sharedPreference = this
+                .getSharedPreferences(getString(R.string.shared_preference_name), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreference.edit();
+        editor.putBoolean(getString(R.string.update_note_flag), true);
+        editor.apply();
     }
 
     @Override
