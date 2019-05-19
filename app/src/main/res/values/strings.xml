@@ -1,10 +1,13 @@
 <resources>
     <string name="app_name">Notes</string>
 
+    <string name="main_activity_label">Notes</string>
     <string name="editor_activity_label">Editor</string>
     <string name="hint_title">Title</string>
     <string name="hint_type_note">Your note here</string>
     <string name="editor_menu_save">Save</string>
     <string name="editor_menu_delete">Delete</string>
     <string name="no_note">No note!</string>
+    <string name="note_id">noteId</string>
+    <string name="shared_preference_name">COM.SAEEFMD.NOTEPAD</string>
 </resources>

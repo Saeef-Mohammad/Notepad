@@ -11,7 +11,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".View.EditorActivity"
             android:label="@string/editor_activity_label"></activity>
-        <activity android:name=".View.MainActivity">
+        <activity android:name=".View.MainActivity"
+            android:label="@string/main_activity_label">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

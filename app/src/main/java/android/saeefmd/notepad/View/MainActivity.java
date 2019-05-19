@@ -1,7 +1,9 @@
 package android.saeefmd.notepad.View;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.saeefmd.notepad.Adapter.NoteListAdapter;
 import android.saeefmd.notepad.Database.DatabaseHelper;
 import android.saeefmd.notepad.Database.Model.Note;
@@ -53,14 +55,6 @@ public class MainActivity extends AppCompatActivity {
         noteListRv.setAdapter(noteListAdapter);
 
         toggleEmptyNotes();
-
-        /*Intent intent = getIntent();
-        long noteId = intent.getLongExtra("noteId", 0);
-        final int adapterPosition = intent.getIntExtra("adapterPosition", -1);
-
-        if (noteId != 0 && adapterPosition != -1) {
-            updateAdapter(adapterPosition, noteId);
-        }*/
 
         notesList.addAll(databaseHelper.getAllNotes());
 
@@ -146,15 +140,29 @@ public class MainActivity extends AppCompatActivity {
         toggleEmptyNotes();
     }
 
+    private void addNewNote (long id) {
+
+        Note note = databaseHelper.getNote(id);
+
+        notesList.add(0, note);
+
+        noteListAdapter.notifyDataSetChanged();
+
+        toggleEmptyNotes();
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
         if (noteId != 0 && adapterPosition != -1) {
             updateAdapter(adapterPosition, noteId);
         } else {
+            SharedPreferences sharedPreference = this
+                    .getSharedPreferences(getString(R.string.shared_preference_name), Context.MODE_PRIVATE);
+            long id = sharedPreference.getLong(getString(R.string.note_id), 0);
 
-            noteListAdapter.notifyDataSetChanged();
-            toggleEmptyNotes();
+            if (id != 0)
+                addNewNote(id);
         }
     }
 }
