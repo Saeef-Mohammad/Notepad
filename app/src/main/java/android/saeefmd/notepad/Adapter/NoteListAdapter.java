@@ -24,6 +24,7 @@ public class NoteListAdapter extends RecyclerView.Adapter {
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView listTitleTv;
+        TextView listNoteTv;
         TextView listdotTv;
         TextView listTimestampTv;
 
@@ -31,6 +32,7 @@ public class NoteListAdapter extends RecyclerView.Adapter {
             super(itemView);
 
             listTitleTv = itemView.findViewById(R.id.list_title_tv);
+            listNoteTv = itemView.findViewById(R.id.list_note_tv);
             listdotTv = itemView.findViewById(R.id.list_dot_tv);
             listTimestampTv = itemView.findViewById(R.id.list_timestamp_tv);
         }
@@ -56,6 +58,7 @@ public class NoteListAdapter extends RecyclerView.Adapter {
         Note note = noteList.get(i);
 
         ((MyViewHolder)viewHolder).listTitleTv.setText(note.getTitle());
+        ((MyViewHolder)viewHolder).listNoteTv.setText(note.getNote());
         ((MyViewHolder)viewHolder).listdotTv.setText(Html.fromHtml("&#8226;"));
         ((MyViewHolder)viewHolder).listTimestampTv.setText(formatDate(note.getTimestamp()));
     }
