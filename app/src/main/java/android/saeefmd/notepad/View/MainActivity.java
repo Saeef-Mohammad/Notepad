@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         noteListAdapter = new NoteListAdapter(this, notesList);
         noteListAdapter.notifyDataSetChanged();
 
+        // Setting the recycler view to display notes
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         noteListRv.setLayoutManager(mLayoutManager);
         noteListRv.setItemAnimator(new DefaultItemAnimator());
