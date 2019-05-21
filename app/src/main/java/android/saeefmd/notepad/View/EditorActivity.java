@@ -112,11 +112,6 @@ public class EditorActivity extends AppCompatActivity {
                 finish();
 
                 return true;
-
-            case R.id.menu_delete:
-                Toast.makeText(this, "Not Yet!!", Toast.LENGTH_SHORT).show();
-
-                return true;
         }
 
         return super.onOptionsItemSelected(item);

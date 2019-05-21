@@ -143,6 +143,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void deleteAllNotes() {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // Delete all rows from the table
+        db.execSQL("DELETE FROM " + Note.TABLE_NAME);
+    }
+
     public int getNotesCount() {
         String countQuery = "SELECT  * FROM " + Note.TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();

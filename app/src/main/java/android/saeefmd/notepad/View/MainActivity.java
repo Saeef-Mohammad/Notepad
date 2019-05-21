@@ -16,6 +16,8 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -106,6 +108,43 @@ public class MainActivity extends AppCompatActivity {
         }));
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case R.id.main_menu_delete_all:
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("Are you sure?")
+                        .setMessage("Delete all notes?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                deleteAllNotes();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+                builder.show();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     private void toggleEmptyNotes() {
         // you can check notesList.size() > 0
 
@@ -127,6 +166,17 @@ public class MainActivity extends AppCompatActivity {
 
         toggleEmptyNotes();
 
+    }
+
+    private void deleteAllNotes() {
+
+        databaseHelper.deleteAllNotes();
+
+        // Clear data from the notelist
+        notesList.clear();
+        noteListAdapter.notifyDataSetChanged();
+
+        toggleEmptyNotes();
     }
 
     private void updateAdapter(int position, long id) {
