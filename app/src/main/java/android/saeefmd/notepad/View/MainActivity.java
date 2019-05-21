@@ -156,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreference = this
                 .getSharedPreferences(getString(R.string.shared_preference_name), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreference.edit();
 
         boolean newNote = sharedPreference.getBoolean(getString(R.string.new_note_flag), false);
         boolean updateNote = sharedPreference.getBoolean(getString(R.string.update_note_flag), false);
@@ -163,12 +164,16 @@ public class MainActivity extends AppCompatActivity {
         if (updateNote) {
 
             updateAdapter(adapterPosition, noteId);
+            editor.putBoolean(getString(R.string.update_note_flag), false).apply();
         } else if (newNote){
 
             long id = sharedPreference.getLong(getString(R.string.note_id), 0);
 
-            if (id != 0)
+            if (id != 0) {
+
                 addNewNote(id);
+                editor.putBoolean(getString(R.string.new_note_flag), false).apply();
+            }
         } else {
 
             toggleEmptyNotes();

@@ -32,7 +32,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Note.TABLE_NAME + " ( " +
                 Note.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 Note.COLUMN_TITLE + " TEXT, " +
-                Note.COLUMN_NOTE + " TEXT " + " )";
+                Note.COLUMN_NOTE + " TEXT, " +
+                Note.COLUMN_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP" + " )";
 
         // Create table
         db.execSQL(CREATE_TABLE);
@@ -72,7 +73,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(Note.TABLE_NAME,
-                new String[]{Note.COLUMN_ID,Note.COLUMN_TITLE, Note.COLUMN_NOTE},
+                new String[]{Note.COLUMN_ID,Note.COLUMN_TITLE, Note.COLUMN_NOTE, Note.COLUMN_TIMESTAMP},
                 Note.COLUMN_ID + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
 
@@ -83,7 +84,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Note note = new Note(
                 cursor.getInt(cursor.getColumnIndex(Note.COLUMN_ID)),
                 cursor.getString(cursor.getColumnIndex(Note.COLUMN_TITLE)),
-                cursor.getString(cursor.getColumnIndex(Note.COLUMN_NOTE)));
+                cursor.getString(cursor.getColumnIndex(Note.COLUMN_NOTE)),
+                cursor.getString(cursor.getColumnIndex(Note.COLUMN_TIMESTAMP)));
 
         // close the db connection
         cursor.close();
@@ -108,6 +110,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 note.setId(cursor.getInt(cursor.getColumnIndex(Note.COLUMN_ID)));
                 note.setTitle(cursor.getString(cursor.getColumnIndex(Note.COLUMN_TITLE)));
                 note.setNote(cursor.getString(cursor.getColumnIndex(Note.COLUMN_NOTE)));
+                note.setTimestamp(cursor.getString(cursor.getColumnIndex(Note.COLUMN_TIMESTAMP)));
 
                 notes.add(note);
             } while (cursor.moveToNext());

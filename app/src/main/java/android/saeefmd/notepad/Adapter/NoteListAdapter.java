@@ -11,6 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class NoteListAdapter extends RecyclerView.Adapter {
@@ -22,12 +25,14 @@ public class NoteListAdapter extends RecyclerView.Adapter {
 
         TextView listTitleTv;
         TextView listdotTv;
+        TextView listTimestampTv;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
             listTitleTv = itemView.findViewById(R.id.list_title_tv);
             listdotTv = itemView.findViewById(R.id.list_dot_tv);
+            listTimestampTv = itemView.findViewById(R.id.list_timestamp_tv);
         }
     }
 
@@ -52,10 +57,24 @@ public class NoteListAdapter extends RecyclerView.Adapter {
 
         ((MyViewHolder)viewHolder).listTitleTv.setText(note.getTitle());
         ((MyViewHolder)viewHolder).listdotTv.setText(Html.fromHtml("&#8226;"));
+        ((MyViewHolder)viewHolder).listTimestampTv.setText(formatDate(note.getTimestamp()));
     }
 
     @Override
     public int getItemCount() {
         return noteList.size();
+    }
+
+    private String formatDate(String dateStr) {
+        try {
+            SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date = fmt.parse(dateStr);
+            SimpleDateFormat fmtOut = new SimpleDateFormat("MMM d");
+            return fmtOut.format(date);
+        } catch (ParseException e) {
+
+        }
+
+        return "";
     }
 }
