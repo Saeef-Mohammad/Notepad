@@ -56,12 +56,11 @@ public class EditorActivity extends AppCompatActivity {
         // Inserting title and note into table
         long id = databaseHelper.insertNote(title, note);
 
-        SharedPreferences sharedPreference = this
-                .getSharedPreferences(getString(R.string.shared_preference_name), Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreference.edit();
-        editor.putBoolean(getString(R.string.new_note_flag), true);
-        editor.putLong(getString(R.string.note_id), id);
-        editor.apply();
+        Intent intent = new Intent();
+        intent.putExtra(getString(R.string.note_id), id);
+        intent.putExtra(getString(R.string.new_note_flag), true);
+        setResult(1001, intent);
+        finish();
     }
 
     private void updateNote(String title, String note) {
@@ -72,11 +71,10 @@ public class EditorActivity extends AppCompatActivity {
         // updating note in db
         databaseHelper.updateNote(mNote);
 
-        SharedPreferences sharedPreference = this
-                .getSharedPreferences(getString(R.string.shared_preference_name), Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreference.edit();
-        editor.putBoolean(getString(R.string.update_note_flag), true);
-        editor.apply();
+        Intent intent = new Intent();
+        intent.putExtra(getString(R.string.update_note_flag), true);
+        setResult(1002, intent);
+        finish();
     }
 
     @Override

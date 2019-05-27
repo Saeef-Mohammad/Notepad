@@ -9,6 +9,7 @@ import android.saeefmd.notepad.Database.DatabaseHelper;
 import android.saeefmd.notepad.Database.Model.Note;
 import android.saeefmd.notepad.R;
 import android.saeefmd.notepad.Utilities.RecyclerTouchListener;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -36,6 +37,11 @@ public class MainActivity extends AppCompatActivity {
 
     private int adapterPosition;
     private long noteId;
+
+    private boolean newNote = false;
+    private boolean updateNote = false;
+
+    private long newNoteId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(MainActivity.this, EditorActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 1001);
             }
         });
 
@@ -81,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, EditorActivity.class);
                 intent.putExtra("noteId", noteId);
                 intent.putExtra("adapterPosition", position);
-                startActivity(intent);
+                startActivityForResult(intent, 1002);
             }
 
             @Override
@@ -202,28 +208,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == 1001) {
+
+            newNoteId = data.getLongExtra(getString(R.string.note_id), 0);
+            newNote = data.getBooleanExtra(getString(R.string.new_note_flag), false);
+        }
+
+        if (resultCode == 1002) {
+
+            updateNote = data.getBooleanExtra(getString(R.string.update_note_flag), false);
+        }
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
-
-        SharedPreferences sharedPreference = this
-                .getSharedPreferences(getString(R.string.shared_preference_name), Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreference.edit();
-
-        boolean newNote = sharedPreference.getBoolean(getString(R.string.new_note_flag), false);
-        boolean updateNote = sharedPreference.getBoolean(getString(R.string.update_note_flag), false);
 
         if (updateNote) {
 
             updateAdapter(adapterPosition, noteId);
-            editor.putBoolean(getString(R.string.update_note_flag), false).apply();
+            updateNote = false;
         } else if (newNote){
 
-            long id = sharedPreference.getLong(getString(R.string.note_id), 0);
+            if (newNoteId != 0) {
 
-            if (id != 0) {
-
-                addNewNote(id);
-                editor.putBoolean(getString(R.string.new_note_flag), false).apply();
+                addNewNote(newNoteId);
+                newNote = false;
             }
         } else {
 
