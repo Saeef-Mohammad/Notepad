@@ -3,9 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingRight="10dp"
-    android:paddingLeft="10dp"
-    android:paddingTop="15dp">
+    android:padding="15dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/rv_list_shape">
 
     <TextView
         android:id="@+id/list_timestamp_tv"
@@ -49,11 +51,5 @@
         android:textSize="12sp"
         android:maxLines="2"
         android:ellipsize="end"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height=".5dp"
-        android:background="#CACACA"
-        android:layout_marginTop="5dp"/>
 
 </LinearLayout>

@@ -1,9 +1,7 @@
 package android.saeefmd.notepad.View;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.saeefmd.notepad.Adapter.NoteListAdapter;
 import android.saeefmd.notepad.Database.DatabaseHelper;
 import android.saeefmd.notepad.Database.Model.Note;

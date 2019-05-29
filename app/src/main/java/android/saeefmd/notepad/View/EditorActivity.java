@@ -1,8 +1,6 @@
 package android.saeefmd.notepad.View;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.saeefmd.notepad.Database.DatabaseHelper;
 import android.saeefmd.notepad.Database.Model.Note;
 import android.saeefmd.notepad.R;
