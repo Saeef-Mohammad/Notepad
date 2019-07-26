@@ -7,7 +7,7 @@
     tools:context=".View.MainActivity">
 
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.appcompat.widget.RecyclerView
         android:id="@+id/note_list_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
